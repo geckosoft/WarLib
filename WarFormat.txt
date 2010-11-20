@@ -1,0 +1,49 @@
+
+
+WAR File Format
+
+00:0000-00:0003	L Id caption number $19000000
+00:0004-00:0005	W Number of entries ( max enrty number +1 )
+00:0006-00:0007	W Archive Id ( used for entry determination)
+		  1000=Maindat.war
+		  2000=Snddat.war
+		  3000=Rezdat.war
+		  4000=Strdat.war
+		  5000=Sfxdat.sud
+		  6000=Muddat.cud
+00:0008-XX:XXXX	L Entry offsets in in file
+		  $FFFFFFFF=unavailable (used in demo version)
+XX:XXXX		RXX Entries
+
+		    PseudoEntry=everything shorter than 4 bytes
+				(counted by substracting offsets)
+
+		    UsefulEntry
+
+			Index :		Feature :
+
+			00 W		Lower Entry Length word
+					=entry datasize-4
+			02 B		Higher Entry Length word
+			03 B		LZSS Compression flag
+					00=uncompressed
+					20=compressed
+
+		LZSS Compression scheme :
+
+			4096 Bytes buffering system
+
+			00 B	Flags bits=bytes in next 8 records
+				
+				Bit set = any duplicity , use
+					  the same byte in buffer
+					  on current position
+					  record = byte
+				Bit clear = duplicity on position
+					    in lower byte and lower
+					    nibble offset of length
+					    in higher byte higher
+					    nibble
+						
+		
+
